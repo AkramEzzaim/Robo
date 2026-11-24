@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Robotique industrielle — Résumé de cours</title>
+<title>Robotique industrielle — Cours et exercices</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
@@ -73,6 +73,7 @@
   .icon-btn svg { width: 18px; height: 18px; stroke: currentColor; }
 
   /* Layout */
+  main { min-width: 0; }
   .layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 28px; max-width: 1320px; margin: 0 auto; padding: 24px 28px 64px; }
   nav.side { position: sticky; top: 84px; align-self: start; display: flex; flex-direction: column; gap: 2px; }
   nav.side .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); padding: 8px 12px 6px; }
@@ -94,14 +95,12 @@
   .stat .l { color: var(--muted); font-size: 13px; }
 
   /* Sections */
-  section.chap { margin-bottom: 36px; scroll-margin-top: 80px; }
+  section.chap { margin-bottom: 36px; }
   .chap-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
   .badge { font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 999px; color: #fff; white-space: nowrap; }
   .chap-head h2 { margin: 0; font-size: 20px; letter-spacing: -.01em; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-  .grid.wide { grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); }
-  .grid.td-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 18px; }
-  .grid.td-grid-table-first { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; }
+  .grid.wide { grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
   .card {
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
     padding: 18px 20px; box-shadow: var(--shadow); min-width: 0;
@@ -137,36 +136,159 @@
   .warn { background: var(--warn-soft); border-color: color-mix(in srgb, var(--warn) 35%, transparent); }
   .warn h3 { color: var(--warn); }
 
+  .tabs { display: inline-flex; gap: 4px; padding: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; width: fit-content; box-shadow: var(--shadow); }
+  .tab { border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 600; font-size: 14px; padding: 8px 18px; border-radius: 9px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .tab:hover { color: var(--text); }
+  .tab.active { background: var(--accent); color: #fff; }
+  .tab .count { font-size: 11px; padding: 1px 7px; border-radius: 999px; background: rgba(127,127,127,.18); }
+  .tab.active .count { background: rgba(255,255,255,.25); }
+  .view .stats { margin-bottom: 28px; }
+  .qcm { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
+  .qcm div { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; font-weight: 600; font-size: 14px; display: flex; flex-direction: column; gap: 2px; }
+  .qcm span { font-size: 11px; font-weight: 500; color: var(--muted); }
+  .two-col { columns: 2; column-gap: 32px; }
+  .two-col li { break-inside: avoid; }
+  nav.side .navgroup.hidden { display: none; }
+  @media (max-width: 700px) { .two-col { columns: 1; } }
+  /* ---------- Quiz ---------- */
+  .btn { border: 1px solid transparent; font: inherit; font-weight: 600; font-size: 14px; padding: 10px 18px; border-radius: 10px; cursor: pointer; transition: transform .05s, background .15s; min-height: 42px; }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.warn-btn { background: var(--warn); color: #fff; }
+  .btn.ghost { background: var(--surface); border-color: var(--border); color: var(--text); }
+  .btn.small { padding: 6px 12px; min-height: 34px; font-size: 13px; }
+  .mode-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+  .mode-card { display: flex; flex-direction: column; gap: 12px; }
+  .mode-card h3 { margin: 0; font-size: 17px; }
+  .mode-card p { margin: 0; }
+  .mode-card .btn { margin-top: auto; align-self: flex-start; }
+  .mode-icon { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; }
+  .mode-icon svg { width: 22px; height: 22px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font: inherit; font-size: 13px; font-weight: 500; padding: 7px 12px; border-radius: 999px; cursor: pointer; }
+  .chip.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .best { font-size: 13px; color: var(--muted); }
+  .runner { padding: 22px 24px; max-width: 760px; }
+  .run-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .run-top #quitQuiz { margin-left: auto; }
+  .timer { font-family: "JetBrains Mono", monospace; font-size: 14px; padding: 4px 10px; border-radius: 8px; background: var(--warn-soft); color: var(--warn); font-weight: 600; }
+  .timer.low { background: #fde2e2; color: #c62828; }
+  .progress { height: 6px; background: var(--surface-2); border-radius: 99px; margin: 14px 0 18px; overflow: hidden; }
+  .progress div { height: 100%; width: 0; background: var(--accent); transition: width .25s; }
+  .question { font-size: 18px; line-height: 1.45; margin: 0 0 16px; font-weight: 600; }
+  .options { display: grid; gap: 10px; }
+  .opt { display: flex; align-items: flex-start; gap: 12px; text-align: left; width: 100%; padding: 13px 14px; border-radius: 12px; border: 1.5px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 15px; cursor: pointer; transition: border-color .15s, background .15s; min-height: 50px; }
+  @media (hover: hover) { .opt:hover:not(:disabled) { border-color: var(--accent); } }
+  .opt .letter { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--surface-2); display: grid; place-items: center; font-weight: 700; font-size: 13px; color: var(--muted); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.sel .letter { background: var(--accent); color: #fff; }
+  .opt.good { border-color: #0e9f6e; background: color-mix(in srgb, #0e9f6e 12%, var(--surface)); }
+  .opt.good .letter { background: #0e9f6e; color: #fff; }
+  .opt.bad { border-color: #dc2626; background: color-mix(in srgb, #dc2626 10%, var(--surface)); }
+  .opt.bad .letter { background: #dc2626; color: #fff; }
+  .opt:disabled { cursor: default; }
+  .feedback { margin-top: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14px; }
+  .feedback.ok { background: color-mix(in srgb, #0e9f6e 12%, var(--surface)); }
+  .feedback.ko { background: color-mix(in srgb, #dc2626 10%, var(--surface)); }
+  .feedback b { display: block; margin-bottom: 2px; }
+  .run-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; }
+  .dots { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; flex: 1; }
+  .dots span { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .dots span.done { background: var(--accent); }
+  .dots span.cur { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .result { text-align: center; max-width: 760px; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 28px 24px; }
+  .score-ring { --p: 0; width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--ring, var(--accent)) calc(var(--p) * 1%), var(--surface-2) 0); }
+  .score-ring span { width: 104px; height: 104px; border-radius: 50%; background: var(--surface); display: grid; place-items: center; font-size: 26px; font-weight: 700; }
+  .result h3 { margin: 8px 0 0; font-size: 20px; justify-content: center; }
+  .result p { margin: 0; }
+  .chap-bars { width: 100%; max-width: 460px; display: grid; gap: 8px; margin: 14px 0 6px; text-align: left; }
+  .chap-bar { display: grid; grid-template-columns: 170px 1fr 44px; white-space: nowrap; align-items: center; gap: 10px; font-size: 13px; }
+  .chap-bar .track { height: 8px; background: var(--surface-2); border-radius: 99px; overflow: hidden; }
+  .chap-bar .fill { height: 100%; border-radius: 99px; }
+  .chap-bar .v { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .result-actions { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+  .review-title { margin: 26px 0 12px; font-size: 16px; }
+  .review { display: grid; gap: 10px; max-width: 760px; }
+  .rv { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid #0e9f6e; border-radius: 12px; padding: 14px 16px; font-size: 14px; }
+  .rv.ko { border-left-color: #dc2626; }
+  .rv .rq { font-weight: 600; margin-bottom: 6px; }
+  .rv .ra { color: var(--muted); }
+  .rv .ra b { color: var(--text); }
+
+  /* ---------- Mobile chapter strip ---------- */
+  .mnav { display: none; }
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 18px; }
   .hidden { display: none !important; }
   .empty { text-align: center; color: var(--muted); padding: 60px 0; }
 
   footer { color: var(--muted); font-size: 13px; text-align: center; padding: 24px; }
 
   @media (max-width: 960px) {
-    .layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
-    nav.side { position: static; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr)); }
-    nav.side .label { grid-column: 1 / -1; }
-    nav.side a { min-height: 44px; }
-    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    main { min-width: 0; }
+    nav.side { display: none; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
     .card.span2 { grid-column: auto; }
-    .grid.wide, .grid.td-grid { grid-template-columns: minmax(0, 1fr); }
   }
   @media (max-width: 560px) {
-    .topbar { padding: 10px 12px; gap: 10px; }
-    .search input { min-height: 44px; font-size: 16px; }
-    .icon-btn { width: 44px; height: 44px; }
+    .topbar { padding: 10px 12px; }
     .brand span { display: none; }
     .layout { padding: 18px 16px 48px; }
     .hero h1 { font-size: 24px; }
-    .grid { grid-template-columns: minmax(0, 1fr); }
-    .card, .stat { padding: 14px; overflow-wrap: anywhere; }
+  }
+  @media (max-width: 960px) {
+    .mnav {
+      display: flex; gap: 8px; overflow-x: auto; position: sticky; top: 65px; z-index: 15;
+      margin: 0 -16px 18px; padding: 10px 16px; background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); scrollbar-width: none;
+    }
+    .mnav::-webkit-scrollbar { display: none; }
+    .mnav a { flex: none; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500; min-height: 44px; padding: 6px 12px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); color: var(--muted); white-space: nowrap; }
+    .mnav a.active { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+    .split { grid-template-columns: minmax(0, 1fr); }
+    .grid, .grid.wide, .mode-grid { grid-template-columns: minmax(0, 1fr); }
+    .card, .formula { max-width: 100%; }
+    html { scroll-padding-top: 124px; }
+  }
+  @media (max-width: 560px) {
+    body { font-size: 14.5px; }
+    .topbar { gap: 10px; }
+    .icon-btn { width: 44px; height: 44px; }
+    .search input { min-height: 44px; font-size: 16px; padding: 8px 10px 8px 34px; }
+    .tabs { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .tab { justify-content: center; min-height: 44px; padding: 9px 6px; font-size: 13.5px; }
+    .tab .count { display: none; }
+    .stats { gap: 10px; }
+    .stat { padding: 12px 14px; }
+    .stat .n { font-size: 22px; }
+    .chap-head { flex-wrap: wrap; gap: 8px; }
+    .chap-head h2 { font-size: 18px; }
+    .card { padding: 16px; overflow-wrap: anywhere; }
     .card h3 { flex-wrap: wrap; }
     .table-scroll table { min-width: 360px; overflow-wrap: normal; }
     :not(.katex-display) > .katex { display: inline-block; max-width: 100%; overflow-x: auto; overflow-y: hidden; vertical-align: middle; }
+    .card table { font-size: 13px; }
+    td, th { padding: 6px 5px; }
+    .formula { padding: 8px; }
+    .formula .katex-display { font-size: .92em; }
+    .mode-card .btn { width: 100%; }
+    .runner { padding: 16px; }
+    .question { font-size: 16.5px; }
+    .opt { font-size: 14.5px; padding: 12px; }
+    .run-nav .btn { padding: 10px 12px; }
+    .dots { display: none; }
+    .hide-sm { display: none; }
+    .run-top { gap: 8px; }
+    .run-top .badge { font-size: 11.5px; }
+    .chap-bar { grid-template-columns: minmax(0, 120px) minmax(0, 1fr) 36px; white-space: normal; font-size: 12px; }
+    .result-actions .btn { flex: 1; }
+    footer { padding-bottom: 40px; }
   }
   @media print {
-    .topbar, nav.side { display: none; }
-    .layout { grid-template-columns: 1fr; }
+    .topbar, nav.side, .mnav, .tabs { display: none; }
+    .layout { grid-template-columns: minmax(0, 1fr); }
+    main { min-width: 0; }
     .card { break-inside: avoid; }
   }
 </style>
@@ -180,7 +302,7 @@
   </div>
   <label class="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input id="q" type="search" aria-label="Rechercher dans le cours" placeholder="Rechercher : codeur, D-H, vérin…" autocomplete="off">
+    <input id="q" type="search" aria-label="Rechercher" placeholder="Rechercher : codeur, D-H, vérin…" autocomplete="off">
   </label>
   <button class="icon-btn" id="theme" title="Changer de thème" aria-label="Changer de thème">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -189,28 +311,50 @@
 
 <div class="layout">
   <nav class="side" id="nav">
-    <div class="label">Sommaire</div>
-    <a href="#ch1"><span class="dot" style="background:var(--c1)"></span>Introduction</a>
-    <a href="#ch2"><span class="dot" style="background:var(--c2)"></span>Architectures</a>
-    <a href="#ch3"><span class="dot" style="background:var(--c3)"></span>Performances</a>
-    <a href="#ch4"><span class="dot" style="background:var(--c4)"></span>Capteurs</a>
-    <a href="#ch5"><span class="dot" style="background:var(--c5)"></span>Actionneurs</a>
-    <a href="#ch6"><span class="dot" style="background:var(--c6)"></span>Modélisation géométrique</a>
-    <a href="#td"><span class="dot" style="background:var(--c7)"></span>TD corrigés</a>
-    <a href="#check"><span class="dot" style="background:var(--warn)"></span>Points à vérifier</a>
+    <div class="navgroup" data-view="cours">
+      <div class="label">Cours</div>
+      <a href="#ch1"><span class="dot" style="background:var(--c1)"></span>Introduction</a>
+      <a href="#ch2"><span class="dot" style="background:var(--c2)"></span>Architectures</a>
+      <a href="#ch3"><span class="dot" style="background:var(--c3)"></span>Performances</a>
+      <a href="#ch4"><span class="dot" style="background:var(--c4)"></span>Capteurs</a>
+      <a href="#ch5"><span class="dot" style="background:var(--c5)"></span>Actionneurs</a>
+      <a href="#ch6"><span class="dot" style="background:var(--c6)"></span>Modélisation géométrique</a>
+    </div>
+    <div class="navgroup hidden" data-view="exercices">
+      <div class="label">Exercices</div>
+      <a href="#ex1"><span class="dot" style="background:var(--c1)"></span>TD 1 · Introduction</a>
+      <a href="#ex2"><span class="dot" style="background:var(--c2)"></span>TD 2 · Architectures</a>
+      <a href="#ex3"><span class="dot" style="background:var(--c3)"></span>TD 3 · Performances</a>
+      <a href="#ex4"><span class="dot" style="background:var(--c4)"></span>Série 5 · Codeurs</a>
+      <a href="#ex6"><span class="dot" style="background:var(--c6)"></span>Séries 6–7 · Modélisation</a>
+      <a href="#check"><span class="dot" style="background:var(--warn)"></span>Points à vérifier</a>
+    </div>
+    <div class="navgroup hidden" data-view="quiz">
+      <div class="label">Quiz &amp; Examen</div>
+      <a href="#quiz-start"><span class="dot" style="background:var(--accent)"></span>Choisir un mode</a>
+    </div>
   </nav>
 
   <main>
     <div class="hero">
-      <h1>Robotique industrielle — Résumé de cours</h1>
-      <p>Les notions clés, les formules et les TD corrigés, chapitre par chapitre.</p>
+      <h1>Robotique industrielle</h1>
+      <p>Le cours, les TD corrigés et des quiz pour réviser, chapitre par chapitre.</p>
+      <div class="tabs" role="tablist">
+        <button class="tab active" id="tab-cours" data-target="cours" role="tab" aria-controls="view-cours" aria-selected="true">Cours <span class="count">6</span></button>
+        <button class="tab" id="tab-exercices" data-target="exercices" role="tab" aria-controls="view-exercices" aria-selected="false">Exercices <span class="count">5</span></button>
+        <button class="tab" id="tab-quiz" data-target="quiz" role="tab" aria-controls="view-quiz" aria-selected="false">Quiz &amp; Examen <span class="count">40</span></button>
+      </div>
+    </div>
+
+    <nav class="mnav hidden" id="mnav" aria-label="Sections"></nav>
+
+    <div class="view" id="view-cours" role="tabpanel" aria-labelledby="tab-cours" data-view="cours">
       <div class="stats">
         <div class="stat"><div class="n">6</div><div class="l">Chapitres</div></div>
         <div class="stat"><div class="n">4</div><div class="l">Types de robots</div></div>
         <div class="stat"><div class="n">18</div><div class="l">Formules clés</div></div>
-        <div class="stat"><div class="n">7</div><div class="l">TD résumés</div></div>
+        <div class="stat"><div class="n">4</div><div class="l">Matrices types</div></div>
       </div>
-    </div>
 
     <!-- CH1 -->
     <section class="chap" id="ch1">
@@ -451,7 +595,7 @@
         </div>
         <div class="card span2">
           <h3>Paramètres de Denavit–Hartenberg <span class="tag">robots série uniquement</span></h3>
-          <div class="grid td-grid td-grid-table-first">
+          <div class="split">
             <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
               <table>
                 <tr><th>Param.</th><th>Type</th><th>Entre</th></tr>
@@ -468,100 +612,327 @@
       </div>
     </section>
 
-    <!-- TD -->
-    <section class="chap" id="td">
-      <div class="chap-head"><span class="badge" style="background:var(--c7)">TD</span><h2>TD corrigés — l'essentiel</h2></div>
-      <div class="grid">
-        <div class="card">
-          <h3>Volumes de travail</h3>
-          <p><b>Cartésien</b> 500 × 500 × 300 mm :</p>
-          <div class="formula">$$V = 75\cdot10^6\ \text{mm}^3$$</div>
-          <p><b>Cylindrique</b> $R_{max}=1000$, $R_{min}=300$, $h=800$ mm :</p>
-          <div class="formula">$$V = \pi(R_{max}^2 - R_{min}^2)\,h$$</div>
-          <div class="formula">$$V \approx 2287\cdot10^6\ \text{mm}^3$$</div>
-        </div>
-        <div class="card">
-          <h3>Robot sphérique</h3>
-          <ul>
-            <li>Série, m = 4 (3 + 1), répétabilité ± 0,01 mm.</li>
-            <li>Axe 1 ± 140°, axe 2 ± 155°, course 400 mm, axe 4 ± 500°.</li>
-            <li>Vitesse réduite près de la pièce : souplesse et précision.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Codeur d'articulation</h3>
-          <ol>
-            <li>Ps = 0,0002 rad = 0,011°, R = 1/100 → Np ≈ 327 pts/tour.</li>
-            <li>300 &lt; 327 &lt; 400 → codeur <b>C4 (400)</b>.</li>
-            <li>Absolu : n = 8,64 → <b>9 pistes</b>.</li>
-          </ol>
-        </div>
-        <div class="card">
-          <h3>Codeur avec vis</h3>
-          <ul>
-            <li>R = 40/120 = 1/3, P = 20 mm, Ps = 0,03 mm → Np = 222,2.</li>
-            <li>C2 &lt; 222,2 &lt; C3 → <b>C3 = 300</b>.</li>
-            <li>Pas obtenu : 0,022 mm → précision améliorée.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Convoyeur</h3>
-          <ul>
-            <li>D = 150 mm, R = 1, Ps = 0,25 mm.</li>
-            <li>$N_p = \pi D R / P_s \approx 1885$ pts/tour → 11 bits.</li>
-            <li>Sur 3 m : 6,37 tours, 12 000 points.</li>
-          </ul>
-          <p class="muted">Les notes donnent 600 (voir points à vérifier).</p>
-        </div>
-        <div class="card">
-          <h3>ACMA-TH8 <span class="tag">RPP</span></h3>
-          <div class="formula">$$\overrightarrow{O_0P}=\begin{pmatrix}L_2c\theta_1 - T_2 s\theta_1\\ L_2 s\theta_1 + T_2 c\theta_1\\ L_1+T_1\end{pmatrix}$$</div>
-          <p class="muted">θ₁ = 0 → (L₂, T₂, L₁ + T₁).</p>
-        </div>
-        <div class="card span2">
-          <h3>Robot SCARA</h3>
-          <div class="grid td-grid">
-            <div>
-              <div class="formula">$$\overrightarrow{O_0E}=\begin{pmatrix}e + fC_1 + gC_{12}\\ fS_1 + gS_{12}\\ T-h\end{pmatrix}$$</div>
-              <p class="muted">Orientation : rotation $z$ d'angle $\theta_1+\theta_2+\theta_3$.</p>
+    </div>
+
+    <div class="view hidden" id="view-exercices" role="tabpanel" aria-labelledby="tab-exercices" data-view="exercices">
+      <div class="stats">
+        <div class="stat"><div class="n">5</div><div class="l">Séries de TD</div></div>
+        <div class="stat"><div class="n">18</div><div class="l">QCM corrigés</div></div>
+        <div class="stat"><div class="n">2</div><div class="l">Robots modélisés</div></div>
+        <div class="stat"><div class="n">6</div><div class="l">Points à vérifier</div></div>
+      </div>
+
+      <!-- EX CH1 -->
+      <section class="chap" id="ex1">
+        <div class="chap-head"><span class="badge" style="background:var(--c1)">Ch. 1</span><h2>TD n°1 — Introduction</h2></div>
+        <div class="grid">
+          <div class="card">
+            <h3>1. QCM <span class="tag">réponses</span></h3>
+            <div class="qcm">
+              <div><span>1</span>C</div><div><span>2</span>B</div><div><span>3</span>C</div><div><span>4</span>A, C</div>
+              <div><span>5</span>C</div><div><span>6</span>C</div><div><span>7</span>B</div><div><span>8</span>B, C</div>
             </div>
+          </div>
+          <div class="card">
+            <h3>2. Relation homme–machine</h3>
+            <div class="flow"><span class="step">Homme</span><span class="arrow">→</span><span class="step">Commande</span><span class="arrow">→</span><span class="step">Actions / Outils</span><span class="arrow">→</span><span class="step">Tâche</span></div>
+            <p style="margin-top:10px">Le schéma représente le <b>4e mode</b>. Il se distingue par la présence de <b>capteurs externes</b>, dont le rôle est la perception de l'environnement.</p>
+          </div>
+          <div class="card">
+            <h3>3 et 4. Types de robots et secteurs</h3>
             <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
               <table>
-                <tr><th>Configuration</th><th>Position de E</th></tr>
-                <tr><td>θ₁ = θ₂ = 0</td><td>(e + f + g, 0, T − h)</td></tr>
-                <tr><td>θ₁ = π/2, θ₂ = 0</td><td>(e, f + g, T − h)</td></tr>
-                <tr><td>θ₁ = π/2, θ₂ = −π/2</td><td>(e + g, f, T − h)</td></tr>
+                <tr><th>Robot</th><th>Secteur / application</th></tr>
+                <tr><td>Mobile</td><td>Militaire, gestion des magasins, manutention</td></tr>
+                <tr><td>Humanoïde</td><td>Accueil, restauration</td></tr>
+                <tr><td>Collaboratif</td><td>Industriel</td></tr>
+                <tr><td>Industriel</td><td>Industriel, conditionnement</td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="card span2">
+            <h3>5 et 6. Questions de cours <span class="tag">réponses courtes</span></h3>
+            <ol class="two-col">
+              <li>SMA, UCC, capteurs, actionneurs.</li>
+              <li>Un ensemble de bras reliés par des articulations.</li>
+              <li>Hors ligne et sur site.</li>
+              <li>L'apprentissage et la restitution.</li>
+              <li>Des logiciels (CAO, CFAO…).</li>
+              <li>Maître et esclave.</li>
+              <li>Le robot exécute la trajectoire enregistrée pendant l'apprentissage.</li>
+              <li>Animer en mouvement les articulations.</li>
+              <li>Internes : détecter l'état interne du robot.</li>
+              <li>Externes : percevoir l'environnement.</li>
+              <li>SMA, UCC, capteurs, actionneurs.</li>
+              <li>Améliorer la production, la qualité et les bénéfices.</li>
+              <li>Les capteurs externes.</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- EX CH2 -->
+      <section class="chap" id="ex2">
+        <div class="chap-head"><span class="badge" style="background:var(--c2)">Ch. 2</span><h2>TD n°2 — Architectures</h2></div>
+        <div class="grid">
+          <div class="card">
+            <h3>1. QCM <span class="tag">réponses</span></h3>
+            <div class="qcm">
+              <div><span>1</span>A, C, D</div><div><span>2</span>D</div><div><span>3</span>B, C</div><div><span>4</span>C, D</div><div><span>5</span>C, D</div>
+              <div><span>6</span>B, C</div><div><span>7</span>B, D</div><div><span>8</span>B, C</div><div><span>9</span>A, C</div><div><span>10</span>C, D</div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>5. Types d'architectures — F1</h3>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+              <table>
+                <tr><td>Architecture</td><td>Série</td></tr>
+                <tr><td>DDL</td><td>m = 4 (3 + 1)</td></tr>
+                <tr><td>Porteur</td><td><code>PPP</code></td></tr>
+                <tr><td>Poignet</td><td>1 axe</td></tr>
+                <tr><td>Type</td><td><b>Cartésien</b></td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <h3>5. Types d'architectures — F2</h3>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+              <table>
+                <tr><td>Architecture</td><td>Série</td></tr>
+                <tr><td>DDL</td><td>m = 4 (3 + 1)</td></tr>
+                <tr><td>Porteur</td><td><span class="muted">non noté</span></td></tr>
+                <tr><td>Poignet</td><td>1 axe</td></tr>
+                <tr><td>Type</td><td><b>Angulaire</b></td></tr>
               </table>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- CHECK -->
-    <section class="chap" id="check">
-      <div class="chap-head"><span class="badge" style="background:var(--warn)">À vérifier</span><h2>Points à vérifier</h2></div>
-      <div class="grid">
-        <div class="card warn">
-          <h3>Erreurs probables dans les notes</h3>
-          <ul>
-            <li>« SCARA de type sphérique » : le SCARA est un type à part (RRP).</li>
-            <li>Convoyeur : π oublié — 1 885 pts/tour, pas 600.</li>
-            <li>ACMA-TH8, θ = 0 : L₁ + T₁, pas L₁ + T₂.</li>
-            <li>T₀⁴ : sθ₁·L₂, pas sθ₁·L₁.</li>
-            <li>D–H, T₀³ : 1re ligne cθ₁, −sθ₁.</li>
-            <li>SCARA, M₀³ : sθ₁cθ₂ + cθ₁sθ₂ (signe +).</li>
-          </ul>
-          <p class="muted" style="margin-top:8px">À confirmer avec le corrigé officiel. Les formules de cette page sont corrigées.</p>
+      <!-- EX CH3 -->
+      <section class="chap" id="ex3">
+        <div class="chap-head"><span class="badge" style="background:var(--c3)">Ch. 3</span><h2>TD n°3 — Performances</h2></div>
+        <div class="grid">
+          <div class="card">
+            <h3>TD 2 — Étude d'un robot industriel</h3>
+            <ol>
+              <li>Série, m = 4 (3 porteur + 1 poignet), robot sphérique.</li>
+              <li>Précision en position : répétabilité ± 0,01 mm.</li>
+              <li>Débattements : axe 1 ± 140°, axe 2 ± 155°, course 400 mm, axe 4 ± 500°.</li>
+              <li>Vitesses différentes : il faut plus de souplesse en s'approchant de la pièce.</li>
+              <li>C'est une translation, et il faut de la précision en s'approchant de la pièce.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>TD 3 — Robot cartésien</h3>
+            <p>Volume de travail : un pavé de 500 × 500 × 300 mm.</p>
+            <div class="formula">$$V = 500 \times 500 \times 300 = 75\cdot10^6\ \text{mm}^3$$</div>
+          </div>
+          <div class="card">
+            <h3>TD 4 — Robot cylindrique</h3>
+            <ul>
+              <li>DDL = 5 : porteur <code>RPP</code>, poignet <code>2R</code>.</li>
+              <li>Volume : cylindre creux, $R_{max} = 1000$ mm, $R_{min} = 300$ mm, $h = 800$ mm.</li>
+            </ul>
+            <div class="formula">$$V = \pi R_{max}^2 h - \pi R_{min}^2 h$$</div>
+            <div class="formula">$$V = \pi(1000^2 - 300^2)\times 800 \approx 2287\cdot10^6\ \text{mm}^3$$</div>
+            <p class="muted">Cycle : prise → pose → retour.</p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- EX CH4 -->
+      <section class="chap" id="ex4">
+        <div class="chap-head"><span class="badge" style="background:var(--c4)">Ch. 4</span><h2>Série n°5 — Capteurs et codeurs</h2></div>
+        <div class="grid">
+          <div class="card">
+            <h3>TD 2 — Articulation de bras robotisé</h3>
+            <p><b>a)</b> Ps = 0,0002 rad = 0,0002 × 360 / 2π = 0,011° ; R = 1/100.</p>
+            <div class="formula">$$N_p = \frac{360 \times 1/100}{0{,}011} \approx 327$$</div>
+            <p class="muted">≈ 327 points par tour.</p>
+            <p><b>b)</b> 300 &lt; 327 &lt; 400 → codeur <b>C4 (400)</b>.</p>
+            <p><b>c)</b> Codeur absolu :</p>
+            <div class="formula">$$n = \frac{\log 400}{\log 2} = 8{,}64$$</div>
+            <p>→ <b>n = 9 pistes</b> (bits).</p>
+          </div>
+          <div class="card">
+            <h3>TD 3 — Codeur avec vis</h3>
+            <ol>
+              <li>Sens de rotation : grâce aux pistes A et B.</li>
+              <li>Piste Z : référence, connaître le nombre de tours.</li>
+              <li>Réducteur 1 étage : $R = Z_A / Z_B = 40/120 = 1/3$.</li>
+              <li>Ps = 0,03 mm, P = 20 mm : Np = R·P / Ps = (1/3 × 20) / 0,03 = <b>222,2</b> pts/tour.</li>
+              <li>C2 &lt; 222,2 &lt; C3 → on choisit <b>C3 = 300</b>.</li>
+              <li>Ps = (1/300) × (1/3) × 20 = <b>0,022 mm</b> → la précision est améliorée.</li>
+            </ol>
+          </div>
+          <div class="card">
+            <h3>TD 4 — Position d'un convoyeur</h3>
+            <p class="muted">D = 150 mm, R = 1, Ps = 0,25 mm.</p>
+            <p><b>a)</b> Points par tour :</p>
+            <div class="formula">$$N_p = \frac{\pi D \cdot R}{P_s} = \frac{\pi \times 150}{0{,}25}$$</div>
+            <p>→ <b>N<sub>p</sub> ≈ 1 885</b> points par tour.</p>
+            <p><b>b)</b> $n = \log N_p / \log 2 \approx 10{,}9$ → <b>11 bits</b>.</p>
+            <p><b>c)</b> Sur 3 m : N = 3000 / (π × 150) = <b>6,37 tours</b>, soit 3000 / 0,25 = <b>12 000 points</b>.</p>
+            <p class="muted">Le codeur absolu a un 2e disque pour compter les tours. Les notes donnent 600 pts/tour et 10 bits (π oublié).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- EX CH6 -->
+      <section class="chap" id="ex6">
+        <div class="chap-head"><span class="badge" style="background:var(--c6)">Ch. 6</span><h2>Séries n°6 et 7 — Modélisation géométrique</h2></div>
+        <div class="grid wide">
+          <div class="card">
+            <h3>Série 6 · TD 1 — Matrices de rotation</h3>
+            <p>Objectif : définir la position et l'orientation de l'effecteur par rapport à la base.</p>
+            <p class="muted">Rotation θ₁ autour de z₀, puis θ₂ autour de y₁ :</p>
+            <div class="formula">$$M_0^2 = M_0^1 M_1^2 = \begin{bmatrix} c_1c_2 & -s_1 & c_1s_2 \\ s_1c_2 & c_1 & s_1s_2 \\ -s_2 & 0 & c_2 \end{bmatrix}$$</div>
+          </div>
+          <div class="card">
+            <h3>Série 6 · TD 2 — Robot ACMA-TH8 <span class="tag">RPP</span></h3>
+            <ul>
+              <li>Robot cylindrique, architecture série, m = 6.</li>
+              <li>$M_0^1$ = rotation θ₁ autour de z ; $M_1^2 = M_2^3 = I$ (articulations P).</li>
+              <li>Donc $M_0^3 = M_0^1$ : c'est l'orientation de $R_3/R_0$.</li>
+            </ul>
+            <div class="formula">$$\overrightarrow{O_0P}_{/R_0} = \begin{pmatrix} L_2c\theta_1 - T_2s\theta_1 \\ L_2s\theta_1 + T_2c\theta_1 \\ L_1+T_1 \end{pmatrix}$$</div>
+            <p class="muted">θ₁ = 0 → (L₂, T₂, L₁ + T₁). Les méthodes homogène et D–H donnent le même résultat.</p>
+          </div>
+          <div class="card">
+            <h3>ACMA-TH8 — Matrices homogènes</h3>
+            <ul>
+              <li>$R_0 \to R_1$ : translation $L_1$ suivant $z_0$.</li>
+              <li>1re articulation : rotation θ₁ autour de $z_0$.</li>
+              <li>$R_1 \to R_2$ : translation $T_1$ suivant $z_0$.</li>
+              <li>$R_2 \to R_3$ : translation $L_2$ suivant $x$.</li>
+            </ul>
+            <div class="formula">$$T_0^4 = \begin{bmatrix} c\theta_1 & -s\theta_1 & 0 & L_2c\theta_1 \\ s\theta_1 & c\theta_1 & 0 & L_2s\theta_1 \\ 0&0&1& L_1+T_1 \\ 0&0&0&1 \end{bmatrix}$$</div>
+            <p class="muted">Puis $\overrightarrow{O_0P} = T_0^4 \cdot (0,\ T_2,\ 0,\ 1)^T$.</p>
+          </div>
+          <div class="card">
+            <h3>ACMA-TH8 — Paramètres D–H</h3>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+              <table>
+                <tr style="text-transform:none"><th style="text-transform:none">Passage</th><th style="text-transform:none">$\alpha_i$</th><th style="text-transform:none">$d_i$</th><th style="text-transform:none">$\theta_i$</th><th style="text-transform:none">$r_i$</th></tr>
+                <tr><td>$R_0\to R_1$</td><td>0</td><td>0</td><td>$\theta_1$</td><td>$L_1$</td></tr>
+                <tr><td>$R_1\to R_2$</td><td>0</td><td>0</td><td>0</td><td>$T_1$</td></tr>
+                <tr><td>$R_2\to R_3$</td><td>0</td><td>$L_2$</td><td>0</td><td>0</td></tr>
+              </table>
+            </div>
+            <div class="formula">$$T_0^3 = \begin{bmatrix} c\theta_1 & -s\theta_1 & 0 & L_2c\theta_1 \\ s\theta_1 & c\theta_1 & 0 & L_2s\theta_1 \\ 0&0&1& L_1+T_1 \\ 0&0&0&1 \end{bmatrix}$$</div>
+          </div>
+          <div class="card span2">
+            <h3>Série 7 · TD 3 — Robot SCARA</h3>
+            <div class="split">
+              <div>
+                <p class="muted">Matrices de passage : rotations θ₁, θ₂, θ₃ autour de z.</p>
+                <div class="formula">$$M_0^4 = \begin{bmatrix} C_{123} & -S_{123} & 0 \\ S_{123} & C_{123} & 0 \\ 0&0&1 \end{bmatrix}$$</div>
+                <div class="formula">$$\overrightarrow{O_0E}_{/R_0} = \begin{pmatrix} e + fC_1 + gC_{12} \\ fS_1 + gS_{12} \\ T-h \end{pmatrix}$$</div>
+              </div>
+              <div>
+                <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+                  <table>
+                    <tr><th>Configuration</th><th>Position de E</th></tr>
+                    <tr><td>θ₁ = θ₂ = 0</td><td>(e + f + g, 0, T − h)</td></tr>
+                    <tr><td>θ₁ = π/2, θ₂ = 0</td><td>(e, f + g, T − h)</td></tr>
+                    <tr><td>θ₁ = π/2, θ₂ = −π/2</td><td>(e + g, f, T − h)</td></tr>
+                  </table>
+                </div>
+                <p class="muted" style="margin-top:10px">Méthode homogène : $T_0^4 = T_0^1 T_1^2 T_2^3 T_3^4$, puis $\overrightarrow{O_0E} = T_0^4 \cdot (0, 0, -h, 1)^T$ — même résultat.</p>
+                <p class="muted">Rappel : $\cos(a+b) = \cos a\cos b - \sin a \sin b$ ; $\sin(a+b) = \sin a\cos b + \cos a\sin b$.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHECK -->
+      <section class="chap" id="check">
+        <div class="chap-head"><span class="badge" style="background:var(--warn)">À vérifier</span><h2>Points à vérifier</h2></div>
+        <div class="grid">
+          <div class="card warn span2">
+            <h3>Erreurs probables dans les notes</h3>
+            <ul class="two-col">
+              <li>« SCARA de type sphérique » : le SCARA est un type à part (RRP).</li>
+              <li>Convoyeur : π oublié — 1 885 pts/tour et 11 bits, pas 600 et 10.</li>
+              <li>ACMA-TH8, θ = 0 : L₁ + T₁, pas L₁ + T₂.</li>
+              <li>T₀⁴ : sθ₁·L₂, pas sθ₁·L₁.</li>
+              <li>D–H, T₀³ : 1re ligne cθ₁, −sθ₁.</li>
+              <li>SCARA, M₀³ : sθ₁cθ₂ + cθ₁sθ₂ (signe +).</li>
+            </ul>
+            <p class="muted" style="margin-top:8px">À confirmer avec le corrigé officiel. Les formules de cette page sont corrigées.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="view hidden" id="view-quiz" role="tabpanel" aria-labelledby="tab-quiz" data-view="quiz">
+      <section class="chap" id="quiz-start">
+        <div class="chap-head"><span class="badge" style="background:var(--accent)">Quiz</span><h2>Teste tes connaissances</h2></div>
+        <div class="grid mode-grid">
+          <div class="card mode-card">
+            <div class="mode-icon" style="background:var(--accent-soft);color:var(--accent)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h3>Entraînement</h3>
+            <p class="muted">Choisis un chapitre. La correction s'affiche après chaque réponse, avec l'explication.</p>
+            <div class="chips" id="chapChips"></div>
+            <button class="btn primary" id="startPractice">Commencer l'entraînement</button>
+          </div>
+          <div class="card mode-card">
+            <div class="mode-icon" style="background:var(--warn-soft);color:var(--warn)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2"/><path d="M9 2h6"/></svg>
+            </div>
+            <h3>Examen blanc</h3>
+            <p class="muted"><b>20 questions</b> tirées au hasard dans tous les chapitres, <b>20 minutes</b>. La correction s'affiche à la fin.</p>
+            <div class="best" id="bestScore"></div>
+            <button class="btn warn-btn" id="startExam">Lancer l'examen</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="chap hidden" id="quiz-run">
+        <div class="card runner">
+          <div class="run-top">
+            <span class="badge" id="runChap">Ch. 1</span>
+            <span class="muted" id="runCount">Question 1 / 10</span>
+            <span class="timer hidden" id="runTimer">20:00</span>
+            <button class="btn ghost small" id="quitQuiz">Quitter</button>
+          </div>
+          <div class="progress"><div id="runBar"></div></div>
+          <h3 class="question" id="runQ"></h3>
+          <div class="options" id="runOpts"></div>
+          <div class="feedback hidden" id="runFb" role="status"></div>
+          <div class="run-nav">
+            <button class="btn ghost" id="prevQ">← Précédent</button>
+            <div class="dots" id="runDots"></div>
+            <button class="btn primary" id="nextQ">Suivant →</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="chap hidden" id="quiz-result">
+        <div class="card result">
+          <div class="score-ring" id="scoreRing"><span id="scoreTxt">0/0</span></div>
+          <h3 id="scoreTitle">Résultat</h3>
+          <p class="muted" id="scoreSub"></p>
+          <div class="chap-bars" id="chapBars"></div>
+          <div class="result-actions">
+            <button class="btn primary" id="retryQuiz">Recommencer</button>
+            <button class="btn ghost" id="backQuiz">Changer de mode</button>
+          </div>
+        </div>
+        <h3 class="review-title" id="reviewTitle">Correction détaillée</h3>
+        <div class="review" id="review"></div>
+      </section>
+    </div>
 
     <div class="empty hidden" id="empty">Aucun résultat.</div>
   </main>
 </div>
 
-<footer>Résumé de cours — Robotique industrielle</footer>
+<footer>Robotique industrielle — Cours et exercices</footer>
 
 <script>
   // Theme
@@ -583,14 +954,53 @@
     }
   });
 
-  // Search
+  const events = new AbortController();
+  // Course, exercises, and quiz views
+  const views = [...document.querySelectorAll('.view')];
+  const tabs = [...document.querySelectorAll('.tab')];
+  const groups = [...document.querySelectorAll('.navgroup')];
+  const { signal } = events;
+  let current = 'cours';
+  function showView(name, scroll) {
+    current = name;
+    views.forEach(v => v.classList.toggle('hidden', v.dataset.view !== name));
+    groups.forEach(g => g.classList.toggle('hidden', g.dataset.view !== name));
+    tabs.forEach(t => { const on = t.dataset.target === name; t.classList.toggle('active', on); t.setAttribute('aria-selected', on); });
+    q.disabled = name === 'quiz';
+    q.placeholder = name === 'quiz' ? 'Recherche indisponible pendant le quiz' : 'Rechercher : codeur, D-H, vérin…';
+    if (name === 'quiz') q.value = '';
+    applySearch();
+    buildMnav();
+    if (scroll) window.scrollTo({ top: 0 });
+  }
+  tabs.forEach(t => t.addEventListener('click', () => {
+    history.replaceState(null, '', '#' + t.dataset.target);
+    showView(t.dataset.target, true);
+  }, { signal }));
+  function viewOfHash() {
+    const id = location.hash.slice(1);
+    if (['cours', 'exercices', 'quiz'].includes(id)) return id;
+    const el = id && document.getElementById(id);
+    const v = el && el.closest('.view');
+    return v ? v.dataset.view : null;
+  }
+  window.addEventListener('hashchange', () => {
+    const view = viewOfHash();
+    if (view && view !== current) {
+      showView(view);
+      document.getElementById(location.hash.slice(1))?.scrollIntoView();
+    }
+  }, { signal });
+
+  // Search (within the open tab)
   const q = document.getElementById('q');
-  const sections = [...document.querySelectorAll('section.chap')];
-  const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-  q.addEventListener('input', () => {
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  function applySearch() {
     const term = norm(q.value.trim());
     let any = false;
-    sections.forEach(sec => {
+    const view = document.getElementById('view-' + current);
+    if (current === 'quiz') { document.getElementById('empty').classList.add('hidden'); return; }
+    view.querySelectorAll('section.chap').forEach(sec => {
       const head = norm(sec.querySelector('.chap-head').textContent);
       let visible = 0;
       sec.querySelectorAll('.card').forEach(card => {
@@ -602,17 +1012,242 @@
       sec.classList.toggle('hidden', visible === 0);
       if (visible) any = true;
     });
+    view.querySelector('.stats').classList.toggle('hidden', !!term);
     document.getElementById('empty').classList.toggle('hidden', any);
-  });
+  }
+  q.addEventListener('input', applySearch, { signal });
+
+  // Mobile section strip
+  function buildMnav() {
+    const m = document.getElementById('mnav'); m.innerHTML = '';
+    const g = document.querySelector('.navgroup[data-view="' + current + '"]');
+    m.classList.toggle('hidden', current === 'quiz');
+    g.querySelectorAll('a').forEach(a => m.appendChild(a.cloneNode(true)));
+  }
 
   // Active nav link
-  const links = [...document.querySelectorAll('nav.side a')];
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+      if (!e.isIntersecting) return;
+      document.querySelectorAll('nav.side a, #mnav a').forEach(a => {
+        const on = a.getAttribute('href') === '#' + e.target.id;
+        a.classList.toggle('active', on);
+        if (on && a.parentElement.id === 'mnav') { const m = a.parentElement; m.scrollTo({ left: a.offsetLeft - m.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' }); }
+      });
     });
   }, { rootMargin: '-90px 0px -65% 0px' });
-  sections.forEach(s => obs.observe(s));
+  document.querySelectorAll('section.chap').forEach(s => obs.observe(s));
+
+  // ================= QUIZ =================
+  const CH = {
+    1: { name: 'Introduction', color: 'var(--c1)' },
+    2: { name: 'Architectures', color: 'var(--c2)' },
+    3: { name: 'Performances', color: 'var(--c3)' },
+    4: { name: 'Capteurs', color: 'var(--c4)' },
+    5: { name: 'Actionneurs', color: 'var(--c5)' },
+    6: { name: 'Modélisation', color: 'var(--c6)' }
+  };
+  const BANK = [
+    // Ch1
+    { c:1, q:"Combien de types de robots le cours distingue-t-il ?", o:["2","3","4","5"], a:2, e:"Industriel, humanoïde, collaboratif et mobile." },
+    { c:1, q:"Le fonctionnement maître / esclave correspond au robot…", o:["programmable","télémanipulateur","collaboratif","mobile"], a:1, e:"Le télémanipulateur reproduit les gestes de l'opérateur (maître)." },
+    { c:1, q:"Les capteurs proprioceptifs servent à…", o:["percevoir l'environnement","détecter l'état interne du robot","saisir un objet","programmer hors ligne"], a:1, e:"Proprioceptif = interne. Extéroceptif = externe (environnement)." },
+    { c:1, q:"Le 4e mode (relation homme–machine) se distingue par la présence…", o:["d'un préhenseur","d'un réducteur","de capteurs externes","d'un codeur absolu"], a:2, e:"Les capteurs externes permettent la perception de l'environnement." },
+    { c:1, q:"Que signifie PTP ?", o:["Programme de trajectoire primaire","Point par point","Position de tâche programmée","Pince à traction pneumatique"], a:1, e:"PTP = point par point, LIN = linéaire, CIRC = circulaire." },
+    { c:1, q:"Que désigne l'UCC ?", o:["Unité de commande et de contrôle","Unité de capteurs combinés","Unité centrale de calcul","Unité de conversion de couple"], a:0, e:"L'UCC commande et contrôle le système mécanique articulé (SMA)." },
+    { c:1, q:"Un robot programmable fonctionne en deux phases :", o:["maître puis esclave","apprentissage puis restitution","PTP puis LIN","calibration puis maintenance"], a:1, e:"Il enregistre la trajectoire pendant l'apprentissage, puis la rejoue." },
+    // Ch2
+    { c:2, q:"Une liaison rotule est une liaison…", o:["active","passive","prismatique simple","motorisée"], a:1, e:"Dans le cours, la rotule est passive (non motorisée)." },
+    { c:2, q:"Le porteur d'un robot série est constitué…", o:["des 3 premières liaisons à partir de la base","de toutes les liaisons R","du préhenseur","des 3 dernières liaisons"], a:0, e:"Le porteur positionne l'effecteur ; le poignet l'oriente." },
+    { c:2, q:"Le poignet d'un robot n'utilise que des liaisons…", o:["P (prismatiques)","R (rotoïdes)","rotules","glissières"], a:1, e:"Le poignet sert à orienter, donc uniquement des rotations." },
+    { c:2, q:"Un robot dont le porteur est PPP est un robot…", o:["cylindrique","sphérique","cartésien","SCARA"], a:2, e:"Trois translations → coordonnées cartésiennes (x, y, z)." },
+    { c:2, q:"Le porteur d'un robot SCARA est de type…", o:["PPP","RPP","RRP","RRR"], a:2, e:"Deux rotations d'axes verticaux + une translation verticale." },
+    { c:2, q:"Une liaison de degré de liberté m = 1 est dite…", o:["simple","complexe","passive","parallèle"], a:0, e:"m = 1 : simple (P ou R). m > 1 : complexe (ex. rotule)." },
+    { c:2, q:"Un robot avec un porteur RPP est…", o:["cartésien","cylindrique","angulaire","SCARA"], a:1, e:"Une rotation + deux translations → coordonnées cylindriques." },
+    // Ch3
+    { c:3, q:"La charge utile d'un robot est…", o:["la masse du bras","la charge maximale supportée","la vitesse maximale","le volume de travail"], a:1, e:"C'est la charge maximale que le robot peut porter." },
+    { c:3, q:"La répétabilité mesure…", o:["la précision en position","la vitesse","la charge utile","le coût d'exploitation"], a:0, e:"Capacité à revenir au même point, ex. ± 0,01 mm." },
+    { c:3, q:"Un préhenseur pneumatique utilise en général…", o:["une pince","une ventouse","un aimant","un codeur"], a:1, e:"Mécanique → pince ; pneumatique → ventouse ; magnétique → objets métalliques." },
+    { c:3, q:"Quel élément du robot a toujours la vitesse la plus grande ?", o:["La base","Le premier axe","Le dernier élément","Le porteur"], a:2, e:"Les vitesses s'additionnent le long de la chaîne." },
+    { c:3, q:"Volume de travail d'un robot cartésien 500 × 500 × 300 mm :", o:["1,3·10⁶ mm³","75·10⁶ mm³","750·10⁶ mm³","7,5·10⁶ mm³"], a:1, e:"500 × 500 × 300 = 75 000 000 mm³." },
+    // Ch4
+    { c:4, q:"Dans un codeur incrémental, le signal Z sert à…", o:["donner le sens de rotation","compter le nombre de tours","mesurer la vitesse","alimenter le codeur"], a:1, e:"Z = top de référence, un par tour." },
+    { c:4, q:"Le sens de rotation d'un codeur incrémental est donné par…", o:["la piste Z","les pistes A et B","le nombre de pistes","le réducteur"], a:1, e:"Le déphasage entre A et B indique le sens." },
+    { c:4, q:"Un codeur absolu à 8 pistes donne combien de positions ?", o:["16","64","256","512"], a:2, e:"Np = 2ⁿ = 2⁸ = 256." },
+    { c:4, q:"Il faut au moins 500 positions. Combien de pistes pour un codeur absolu ?", o:["8","9","10","500"], a:1, e:"log 500 / log 2 ≈ 8,97 → on arrondit à 9 (2⁹ = 512)." },
+    { c:4, q:"Un capteur de contact repose sur une technologie…", o:["TOR","analogique","optique","capacitive"], a:0, e:"TOR = tout ou rien (interrupteur)." },
+    { c:4, q:"Translation : vis de pas P = 5 mm, R = 1, pas souhaité Ps = 0,01 mm. Np = ?", o:["50","200","500","5 000"], a:2, e:"Np = R·P / Ps = 1 × 5 / 0,01 = 500 points/tour." },
+    { c:4, q:"Le calcul donne Np = 222. Catalogue : C2 = 200, C3 = 300, C4 = 400. On choisit…", o:["C2","C3","C4","aucun"], a:1, e:"On prend le premier codeur au-dessus de la valeur calculée." },
+    // Ch5
+    { c:5, q:"Un vérin double effet (VDE) possède…", o:["1 commande","2 commandes","3 commandes","aucune commande"], a:1, e:"VSE : 1 commande ; VDE : 2 commandes." },
+    { c:5, q:"p = 6 bar, S = 10⁻³ m². Force du vérin ?", o:["6 N","60 N","600 N","6 000 N"], a:2, e:"F = p·S = 6·10⁵ × 10⁻³ = 600 N." },
+    { c:5, q:"p = 1 bar et Q = 2·10⁻³ m³/s. Puissance hydraulique ?", o:["2 W","20 W","200 W","2 000 W"], a:2, e:"P = p·Q = 10⁵ × 2·10⁻³ = 200 W (p en pascals)." },
+    { c:5, q:"Réducteur : Z menante = 20, Z menée = 60. R = ?", o:["3","1/3","1/2","1/6"], a:1, e:"R = Z menantes / Z menées = 20 / 60 = 1/3." },
+    { c:5, q:"Moteur : Cm = 2 N·m, Ωm = 100 rad/s. Puissance utile ?", o:["50 W","102 W","200 W","2 000 W"], a:2, e:"Pu = Cm · Ωm = 2 × 100 = 200 W." },
+    { c:5, q:"Le rendement d'un vérin hydraulique vaut…", o:["P hydraulique / P mécanique","P mécanique / P hydraulique","P × Q","F / S"], a:1, e:"η = puissance utile (mécanique) / puissance absorbée (hydraulique)." },
+    // Ch6
+    { c:6, q:"La matrice homogène est une matrice…", o:["2 × 2","3 × 3","4 × 4","6 × 6"], a:2, e:"Rotation 3×3 + translation 3×1 + ligne (0 0 0 1)." },
+    { c:6, q:"La 4e colonne d'une matrice homogène représente…", o:["la rotation","la position (translation)","le rendement","les angles d'Euler"], a:1, e:"Les 3 premières lignes de la 4e colonne donnent la translation." },
+    { c:6, q:"Pour une articulation prismatique, la matrice de rotation est…", o:["nulle","l'identité","une rotation autour de z","une rotation autour de x"], a:1, e:"Une translation ne change pas l'orientation." },
+    { c:6, q:"La convention de Denavit–Hartenberg s'applique aux robots…", o:["parallèles","série uniquement","mobiles uniquement","mixtes"], a:1, e:"D–H est applicable aux robots série uniquement." },
+    { c:6, q:"Combien de paramètres utilise la convention D–H par articulation ?", o:["2","3","4","6"], a:2, e:"αᵢ, dᵢ, θᵢ, rᵢ : 2 angles et 2 distances." },
+    { c:6, q:"Dans la matrice de rotation autour de z, l'élément ligne 1, colonne 2 vaut…", o:["cos θ","sin θ","−sin θ","0"], a:2, e:"Rz = [[cθ, −sθ, 0], [sθ, cθ, 0], [0, 0, 1]]." },
+    { c:6, q:"Robot SCARA du TD, θ₁ = θ₂ = 0. La coordonnée x de E vaut…", o:["e","e + f","e + f + g","f + g"], a:2, e:"x = e + f·C₁ + g·C₁₂ = e + f + g." },
+    { c:6, q:"On écrit C₁₂ pour…", o:["cos θ₁ · cos θ₂","cos(θ₁ + θ₂)","cos(θ₁ − θ₂)","cos θ₁₂ (angle 12)"], a:1, e:"Notation abrégée de cos(θ₁ + θ₂)." }
+  ];
+
+  const $ = id => document.getElementById(id);
+  const LETTERS = 'ABCD';
+  const EXAM_N = 20, EXAM_SEC = 20 * 60;
+  let practiceCh = 0; // 0 = tous
+  let run = null, timerId = null;
+
+  // chapter chips
+  const chipsEl = $('chapChips');
+  chipsEl.replaceChildren();
+  [[0, 'Tous']].concat(Object.keys(CH).map(k => [+k, 'Ch. ' + k + ' · ' + CH[k].name])).forEach(([k, label]) => {
+    const b = document.createElement('button');
+    b.className = 'chip' + (k === 0 ? ' on' : ''); b.textContent = label; b.dataset.ch = k;
+    b.onclick = () => { practiceCh = k; chipsEl.querySelectorAll('.chip').forEach(c => c.classList.toggle('on', +c.dataset.ch === k)); };
+    chipsEl.appendChild(b);
+  });
+
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  // Shuffle options too, keeping track of the right answer
+  function prep(q) { const idx = shuffle([0,1,2,3].slice(0, q.o.length)); return { ...q, o: idx.map(i => q.o[i]), a: idx.indexOf(q.a) }; }
+
+  function showPane(id) {
+    ['quiz-start', 'quiz-run', 'quiz-result'].forEach(p => $(p).classList.toggle('hidden', p !== id));
+    window.scrollTo({ top: 0 });
+  }
+
+  function start(mode) {
+    let qs = mode === 'exam' ? shuffle(BANK).slice(0, EXAM_N) : shuffle(BANK.filter(q => !practiceCh || q.c === practiceCh));
+    run = { mode, qs: qs.map(prep), ans: qs.map(() => null), i: 0, left: EXAM_SEC, deadline: Date.now() + EXAM_SEC * 1000 };
+    clearInterval(timerId);
+    $('runTimer').classList.toggle('hidden', mode !== 'exam');
+    if (mode === 'exam') { tick(); timerId = setInterval(tick, 1000); }
+    showPane('quiz-run'); render();
+  }
+  function tick() {
+    run.left = Math.max(0, Math.ceil((run.deadline - Date.now()) / 1000));
+    const m = Math.floor(run.left / 60), s = run.left % 60;
+    $('runTimer').textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    $('runTimer').classList.toggle('low', run.left <= 60);
+    if (run.left <= 0) { finish(); return; }
+  }
+
+  function render() {
+    const q = run.qs[run.i], n = run.qs.length, chosen = run.ans[run.i];
+    const locked = run.mode === 'practice' && chosen !== null;
+    $('runChap').textContent = 'Ch. ' + q.c + ' · ' + CH[q.c].name;
+    $('runChap').style.background = CH[q.c].color;
+    $('runCount').innerHTML = '<span class="hide-sm">Question </span>' + (run.i + 1) + ' / ' + n;
+    $('runBar').style.width = ((run.ans.filter(a => a !== null).length) / n * 100) + '%';
+    $('runQ').textContent = q.q;
+    const box = $('runOpts'); box.innerHTML = '';
+    q.o.forEach((txt, k) => {
+      const b = document.createElement('button');
+      b.className = 'opt';
+      b.innerHTML = '<span class="letter">' + LETTERS[k] + '</span><span></span>';
+      b.lastChild.textContent = txt;
+      if (locked) { b.disabled = true; if (k === q.a) b.classList.add('good'); else if (k === chosen) b.classList.add('bad'); }
+      else if (k === chosen) b.classList.add('sel');
+      b.onclick = () => { run.ans[run.i] = k; render(); };
+      box.appendChild(b);
+    });
+    const fb = $('runFb');
+    delete fb.dataset.warned;
+    if (locked) {
+      const ok = chosen === q.a;
+      fb.className = 'feedback ' + (ok ? 'ok' : 'ko');
+      fb.innerHTML = '<b>' + (ok ? 'Bonne réponse' : 'Réponse : ' + LETTERS[q.a] + ' — ' + escapeHtml(q.o[q.a])) + '</b>' + escapeHtml(q.e);
+    } else fb.className = 'feedback hidden';
+    $('prevQ').disabled = run.i === 0;
+    const last = run.i === n - 1;
+    $('nextQ').textContent = last ? (run.mode === 'exam' ? 'Terminer l\'examen' : 'Voir le résultat') : 'Suivant →';
+    const dots = $('runDots'); dots.innerHTML = '';
+    if (n <= 20) run.qs.forEach((_, k) => { const d = document.createElement('span'); if (run.ans[k] !== null) d.className = 'done'; if (k === run.i) d.classList.add('cur'); dots.appendChild(d); });
+  }
+  function escapeHtml(s) { return s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  $('prevQ').onclick = () => { if (run.i > 0) { run.i--; render(); } };
+  $('nextQ').onclick = () => {
+    if (run.i < run.qs.length - 1) { run.i++; render(); return; }
+    const missing = run.ans.filter(a => a === null).length;
+    if (run.mode === 'exam' && missing && !confirmFinish(missing)) return;
+    finish();
+  };
+  function confirmFinish(missing) {
+    const fb = $('runFb');
+    if (fb.dataset.warned === '1') { fb.dataset.warned = ''; return true; }
+    fb.dataset.warned = '1';
+    fb.className = 'feedback ko';
+    fb.innerHTML = '<b>' + missing + ' question(s) sans réponse.</b>Clique encore sur « Terminer l\'examen » pour valider quand même.';
+    return false;
+  }
+  $('quitQuiz').onclick = () => { clearInterval(timerId); showPane('quiz-start'); };
+  $('startPractice').onclick = () => start('practice');
+  $('startExam').onclick = () => start('exam');
+  $('retryQuiz').onclick = () => start(run.mode);
+  $('backQuiz').onclick = () => showPane('quiz-start');
+
+  function finish() {
+    clearInterval(timerId);
+    const n = run.qs.length;
+    const score = run.qs.reduce((s, q, k) => s + (run.ans[k] === q.a ? 1 : 0), 0);
+    const pct = Math.round(score / n * 100);
+    const note = Math.round(score / n * 200) / 10;
+    const ring = $('scoreRing');
+    ring.style.setProperty('--p', pct);
+    ring.style.setProperty('--ring', pct >= 70 ? '#0e9f6e' : pct >= 50 ? 'var(--warn)' : '#dc2626');
+    $('scoreTxt').textContent = score + '/' + n;
+    $('scoreTitle').textContent = pct >= 80 ? 'Excellent !' : pct >= 60 ? 'Bien joué' : pct >= 40 ? 'À consolider' : 'À retravailler';
+    let sub = pct + ' % de bonnes réponses · note ' + String(note).replace('.', ',') + ' / 20';
+    if (run.mode === 'exam') {
+      const used = EXAM_SEC - Math.max(run.left, 0);
+      sub += ' · temps ' + Math.floor(used / 60) + ' min ' + String(used % 60).padStart(2, '0') + ' s';
+      try {
+        const best = +localStorage.getItem('robotique-best') || 0;
+        if (note > best) localStorage.setItem('robotique-best', note);
+      } catch (e) {}
+      showBest();
+    }
+    $('scoreSub').textContent = sub;
+    // per chapter
+    const bars = $('chapBars'); bars.innerHTML = '';
+    Object.keys(CH).forEach(k => {
+      const qs = run.qs.map((q, i) => [q, i]).filter(([q]) => q.c === +k);
+      if (!qs.length) return;
+      const ok = qs.filter(([q, i]) => run.ans[i] === q.a).length;
+      const row = document.createElement('div'); row.className = 'chap-bar';
+      row.innerHTML = '<span>Ch. ' + k + ' · ' + CH[k].name + '</span><div class="track"><div class="fill" style="width:' + (ok / qs.length * 100) + '%;background:' + CH[k].color + '"></div></div><span class="v">' + ok + '/' + qs.length + '</span>';
+      bars.appendChild(row);
+    });
+    // review (wrong answers first)
+    const rv = $('review'); rv.innerHTML = '';
+    const order = run.qs.map((q, i) => i).sort((x, y) => (run.ans[x] === run.qs[x].a) - (run.ans[y] === run.qs[y].a));
+    order.forEach(i => {
+      const q = run.qs[i], a = run.ans[i], ok = a === q.a;
+      const d = document.createElement('div'); d.className = 'rv' + (ok ? '' : ' ko');
+      d.innerHTML = '<div class="rq"></div><div class="ra"></div>';
+      d.firstChild.textContent = (i + 1) + '. ' + q.q;
+      d.lastChild.innerHTML = (ok ? '✓ ' : '✗ Ta réponse : ' + (a === null ? '<b>aucune</b>' : '<b>' + escapeHtml(q.o[a]) + '</b>') + ' · ') +
+        'Bonne réponse : <b>' + escapeHtml(q.o[q.a]) + '</b><br>' + escapeHtml(q.e);
+      rv.appendChild(d);
+    });
+    showPane('quiz-result');
+  }
+  function showBest() {
+    let best = 0; try { best = +localStorage.getItem('robotique-best') || 0; } catch (e) {}
+    $('bestScore').textContent = best ? 'Meilleure note : ' + String(best).replace('.', ',') + ' / 20' : '';
+  }
+  showBest();
+
+  showView(viewOfHash() || 'cours');
+  if (location.hash && !['#cours', '#exercices', '#quiz'].includes(location.hash)) {
+    document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  }
 </script>
 </body>
 </html>
