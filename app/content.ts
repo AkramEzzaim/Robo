@@ -7,7 +7,7 @@ export const content = String.raw`
   </div>
   <label class="search">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    <input id="q" type="search" placeholder="Rechercher : codeur, D-H, vérin…" autocomplete="off">
+    <input id="q" type="search" aria-label="Rechercher dans le cours" placeholder="Rechercher : codeur, D-H, vérin…" autocomplete="off">
   </label>
   <button class="icon-btn" id="theme" title="Changer de thème" aria-label="Changer de thème">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -45,13 +45,15 @@ export const content = String.raw`
       <div class="grid">
         <div class="card">
           <h3>Les 4 types de robots</h3>
-          <table>
-            <tr><th>Type</th><th>Secteurs</th></tr>
-            <tr><td><b>Industriel</b></td><td>Industrie, conditionnement</td></tr>
-            <tr><td><b>Humanoïde</b></td><td>Accueil, restauration</td></tr>
-            <tr><td><b>Collaboratif</b></td><td>Industrie</td></tr>
-            <tr><td><b>Mobile</b></td><td>Militaire, magasins, manutention</td></tr>
-          </table>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+            <table>
+              <tr><th>Type</th><th>Secteurs</th></tr>
+              <tr><td><b>Industriel</b></td><td>Industrie, conditionnement</td></tr>
+              <tr><td><b>Humanoïde</b></td><td>Accueil, restauration</td></tr>
+              <tr><td><b>Collaboratif</b></td><td>Industrie</td></tr>
+              <tr><td><b>Mobile</b></td><td>Militaire, magasins, manutention</td></tr>
+            </table>
+          </div>
         </div>
         <div class="card">
           <h3>Modes de fonctionnement</h3>
@@ -119,13 +121,15 @@ export const content = String.raw`
         </div>
         <div class="card">
           <h3>Type de robot selon le porteur</h3>
-          <table>
-            <tr><th>Type</th><th>Porteur</th></tr>
-            <tr><td>Cartésien</td><td><code>PPP</code></td></tr>
-            <tr><td>Cylindrique</td><td><code>RPP</code></td></tr>
-            <tr><td>SCARA</td><td><code>RRP</code></td></tr>
-            <tr><td>Angulaire</td><td><code>RRR</code></td></tr>
-          </table>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+            <table>
+              <tr><th>Type</th><th>Porteur</th></tr>
+              <tr><td>Cartésien</td><td><code>PPP</code></td></tr>
+              <tr><td>Cylindrique</td><td><code>RPP</code></td></tr>
+              <tr><td>SCARA</td><td><code>RRP</code></td></tr>
+              <tr><td>Angulaire</td><td><code>RRR</code></td></tr>
+            </table>
+          </div>
         </div>
         <div class="card">
           <h3>Décrire un robot <span class="tag">méthode</span></h3>
@@ -160,12 +164,14 @@ export const content = String.raw`
         </div>
         <div class="card">
           <h3>Effecteurs</h3>
-          <table>
-            <tr><th>Préhenseur</th><th>Exemple</th></tr>
-            <tr><td>Mécanique</td><td>Pince</td></tr>
-            <tr><td>Pneumatique</td><td>Ventouse</td></tr>
-            <tr><td>Magnétique</td><td>Objets métalliques</td></tr>
-          </table>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+            <table>
+              <tr><th>Préhenseur</th><th>Exemple</th></tr>
+              <tr><td>Mécanique</td><td>Pince</td></tr>
+              <tr><td>Pneumatique</td><td>Ventouse</td></tr>
+              <tr><td>Magnétique</td><td>Objets métalliques</td></tr>
+            </table>
+          </div>
           <p class="muted" style="margin-top:8px">+ les outils classiques.</p>
         </div>
       </div>
@@ -272,14 +278,16 @@ export const content = String.raw`
         </div>
         <div class="card span2">
           <h3>Paramètres de Denavit–Hartenberg <span class="tag">robots série uniquement</span></h3>
-          <div class="grid" style="grid-template-columns: 1fr 1.4fr; gap: 18px;">
-            <table>
-              <tr><th>Param.</th><th>Type</th><th>Entre</th></tr>
-              <tr><td>$\alpha_i$</td><td>Angle</td><td>$z_{i-1}$ et $z_i$</td></tr>
-              <tr><td>$d_i$</td><td>Distance</td><td>$z_{i-1}$ et $z_i$</td></tr>
-              <tr><td>$\theta_i$</td><td>Angle</td><td>$x_{i-1}$ et $x_i$</td></tr>
-              <tr><td>$r_i$</td><td>Distance</td><td>$x_{i-1}$ et $x_i$</td></tr>
-            </table>
+          <div class="grid td-grid td-grid-table-first">
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+              <table>
+                <tr><th>Param.</th><th>Type</th><th>Entre</th></tr>
+                <tr><td>$\alpha_i$</td><td>Angle</td><td>$z_{i-1}$ et $z_i$</td></tr>
+                <tr><td>$d_i$</td><td>Distance</td><td>$z_{i-1}$ et $z_i$</td></tr>
+                <tr><td>$\theta_i$</td><td>Angle</td><td>$x_{i-1}$ et $x_i$</td></tr>
+                <tr><td>$r_i$</td><td>Distance</td><td>$x_{i-1}$ et $x_i$</td></tr>
+              </table>
+            </div>
             <div class="formula">$$T_{i-1}^{i}=\begin{bmatrix}c\theta_i&-s\theta_i&0&d_i\\c\alpha_i s\theta_i&c\alpha_i c\theta_i&-s\alpha_i&-r_i s\alpha_i\\s\alpha_i s\theta_i&s\alpha_i c\theta_i&c\alpha_i&r_i c\alpha_i\\0&0&0&1\end{bmatrix}$$</div>
           </div>
           <p class="muted" style="margin-top:10px">Méthode : un tableau (une ligne par passage $R_{i-1}\to R_i$), une matrice par ligne, puis le produit.</p>
@@ -339,17 +347,19 @@ export const content = String.raw`
         </div>
         <div class="card span2">
           <h3>Robot SCARA</h3>
-          <div class="grid" style="grid-template-columns: 1fr 1.2fr; gap: 18px;">
+          <div class="grid td-grid">
             <div>
               <div class="formula">$$\overrightarrow{O_0E}=\begin{pmatrix}e + fC_1 + gC_{12}\\ fS_1 + gS_{12}\\ T-h\end{pmatrix}$$</div>
               <p class="muted">Orientation : rotation $z$ d'angle $\theta_1+\theta_2+\theta_3$.</p>
             </div>
-            <table>
-              <tr><th>Configuration</th><th>Position de E</th></tr>
-              <tr><td>θ₁ = θ₂ = 0</td><td>(e + f + g, 0, T − h)</td></tr>
-              <tr><td>θ₁ = π/2, θ₂ = 0</td><td>(e, f + g, T − h)</td></tr>
-              <tr><td>θ₁ = π/2, θ₂ = −π/2</td><td>(e + g, f, T − h)</td></tr>
-            </table>
+            <div class="table-scroll" tabindex="0" role="region" aria-label="Tableau du cours">
+              <table>
+                <tr><th>Configuration</th><th>Position de E</th></tr>
+                <tr><td>θ₁ = θ₂ = 0</td><td>(e + f + g, 0, T − h)</td></tr>
+                <tr><td>θ₁ = π/2, θ₂ = 0</td><td>(e, f + g, T − h)</td></tr>
+                <tr><td>θ₁ = π/2, θ₂ = −π/2</td><td>(e + g, f, T − h)</td></tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
