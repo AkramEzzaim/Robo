@@ -16,3 +16,4 @@ Puis ouvrir http://localhost:3000.
 - `app/content.ts` — contenu de la page (HTML, formules LaTeX entre `$...$`)
 - `app/globals.css` — styles (thème clair / sombre)
 - `app/Enhancements.tsx` — thème, rendu KaTeX, recherche, sommaire actif
+# Robotique-industrielle-
