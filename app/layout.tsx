@@ -7,8 +7,8 @@ const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600", "700"], 
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: "Robotique industrielle — Cours et exercices",
-  description: "Le cours, les TD corrigés et des quiz pour réviser, chapitre par chapitre.",
+  title: "Modules de révision",
+  description: "Cours, exercices corrigés et quiz de robotique industrielle et de traitement d’images médicales.",
 };
 
 // Applies the saved (or system) theme before first paint to avoid a flash.

@@ -1,0 +1,73 @@
+export const imagingQuiz = {
+  searchPlaceholder: "Rechercher : histogramme, médian, Fourier…",
+  bestScoreKey: "tim-best",
+  chapters: {
+    1: { name: 'Introduction', color: 'var(--c1)' },
+    2: { name: 'Image numérique', color: 'var(--c2)' },
+    3: { name: 'Histogramme', color: 'var(--c3)' },
+    4: { name: 'Bruit', color: 'var(--c4)' },
+    5: { name: 'Filtrage', color: 'var(--c5)' },
+    6: { name: 'Intensité', color: 'var(--c6)' },
+    7: { name: 'Fourier', color: 'var(--c7)' }
+  },
+  questions: [
+    // Ch1
+    { c:1, q:"Quelle modalité offre le meilleur contraste des tissus mous (cerveau, muscles) ?", o:["Radiographie","IRM","Échographie","Infrarouge"], a:1, e:"L'IRM utilise un champ magnétique et des ondes radio : très bon contraste des tissus mous." },
+    { c:1, q:"L'échographie utilise…", o:["des rayons X","des ondes sonores (ultrasons)","un champ magnétique","des rayons gamma"], a:1, e:"Ondes sonores, temps réel, non invasif (grossesse, organes mous)." },
+    { c:1, q:"Restaurer une image, c'est corriger une dégradation…", o:["inconnue","connue","aléatoire uniquement","de couleur uniquement"], a:1, e:"Amélioration : dégradation inconnue. Restauration : dégradation connue." },
+    { c:1, q:"Les longueurs d'onde visibles par l'œil vont de…", o:["200 à 1 200 nm","380 à 780 nm","700 à 1 000 nm","10 à 380 nm"], a:1, e:"380–780 nm ; les capteurs vont de 200 à 1 200 nm." },
+    { c:1, q:"Quelles cellules de la rétine perçoivent la couleur ?", o:["Les bâtonnets","Les cônes","Les neurones V3","Les cellules ganglionnaires"], a:1, e:"Trois types de cônes : S (bleu), M (vert), L (rouge)." },
+    { c:1, q:"Pour une image RX, on mesure…", o:["la lumière réfléchie","l'onde émise par l'objet","ce qui reste après absorption par les tissus","la chaleur"], a:2, e:"Les rayons X sont absorbés par les tissus ; le capteur mesure le reste." },
+    // Ch2
+    { c:2, q:"L'échantillonnage consiste à numériser…", o:["l'amplitude","les coordonnées","les couleurs","le bruit"], a:1, e:"Échantillonnage = coordonnées ; quantification = amplitude (niveaux)." },
+    { c:2, q:"Combien de niveaux de gris avec un codage sur 8 bits ?", o:["8","128","255","256"], a:3, e:"2⁸ = 256 niveaux, de 0 à 255." },
+    { c:2, q:"Une image RGB 3 × 8 bits peut afficher environ…", o:["256 couleurs","65 536 couleurs","16,7 millions de couleurs","4 milliards de couleurs"], a:2, e:"(2⁸)³ = 2²⁴ ≈ 16,7 millions." },
+    { c:2, q:"Taille d'une image couleur 1000 × 1000, 3 canaux de 8 bits ?", o:["3·10⁶ bits","8·10⁶ bits","24·10⁶ bits","1·10⁶ bits"], a:2, e:"1000 × 1000 × 3 × 8 = 24·10⁶ bits = 3 Mo." },
+    { c:2, q:"Images 3 bits : A = 6, B = 3. Que vaut A + B ?", o:["9","7","1","0"], a:1, e:"6 + 3 = 9 > 7 → saturé à 7 (max sur 3 bits)." },
+    { c:2, q:"Images 3 bits : A = 0, B = 4. Que vaut A − B ?", o:["−4","4","0","7"], a:2, e:"Les valeurs négatives sont mises à 0." },
+    { c:2, q:"La résolution d'une image s'exprime en…", o:["bits","ppp (dpi)","pixels","décibels"], a:1, e:"Pixels par unité de longueur : points par pouce." },
+    { c:2, q:"L'opération XOR entre deux images binaires garde en blanc les pixels…", o:["communs à A et B","blancs dans A ou B","qui diffèrent entre A et B","noirs dans A"], a:2, e:"XOR = 1 si un seul des deux pixels vaut 1." },
+    { c:2, q:"Une image indexée stocke, pour chaque pixel…", o:["sa couleur RGB","l'adresse de sa couleur dans une palette","un seul bit","sa position"], a:1, e:"La valeur du pixel pointe vers une couleur dans une table." },
+    { c:2, q:"Dans f(x,y) = i(x,y)·r(x,y), la réflectance r est comprise entre…", o:["0 et 255","0 et 1","0 et ∞","−1 et 1"], a:1, e:"0 : tout absorbé ; 1 : tout réfléchi." },
+    // Ch3
+    { c:3, q:"Un histogramme concentré à gauche indique une image…", o:["claire","sombre","très contrastée","bruitée"], a:1, e:"Les pixels ont surtout des niveaux bas (sombres)." },
+    { c:3, q:"Normalisé par le nombre de pixels, l'histogramme est…", o:["une fonction aléatoire","une densité de probabilité","une loi de distribution spatiale","une fonction constante"], a:1, e:"p(r_k) = n_k / MN : probabilité d'apparition de chaque niveau." },
+    { c:3, q:"Étirement de [0, 10] vers [0, 20] : T(x) = ?", o:["x + 10","2x","x / 2","20 − x"], a:1, e:"α = (20 − 0)/(10 − 0) = 2, β = 0." },
+    { c:3, q:"Étirement de [50, 100] vers [0, 255] : que devient le niveau 75 ?", o:["75","127,5","150","255"], a:1, e:"α = 255/50 = 5,1 ; T(75) = 5,1 × (75 − 50) = 127,5." },
+    { c:3, q:"Quand l'étirement d'histogramme est-il sans effet ?", o:["Image très sombre","Image déjà à 0 et 255","Image bruitée","Image couleur"], a:1, e:"Si min = a et max = b, alors T(x) = x." },
+    { c:3, q:"L'égalisation d'histogramme utilise…", o:["le min et le max","l'histogramme cumulé","la transformée de Fourier","un filtre médian"], a:1, e:"s_k = (L − 1) × somme cumulée des probabilités." },
+    { c:3, q:"Image 3 bits, 4 096 pixels, n₀ = 790. Que vaut s₀ ?", o:["0,19","1,35","3,08","7"], a:1, e:"s₀ = 7 × 790 / 4096 ≈ 1,35 → arrondi à 1." },
+    { c:3, q:"Différence principale entre étirement et égalisation ?", o:["L'étirement est non linéaire","L'égalisation garde la forme de l'histogramme","L'étirement est linéaire, l'égalisation non linéaire","Aucune"], a:2, e:"L'étirement élargit sans changer la forme ; l'égalisation l'aplatit." },
+    // Ch4
+    { c:4, q:"Quel bruit modifie TOUS les pixels de l'image ?", o:["Poivre et sel","Gaussien","Impulsionnel","Aucun"], a:1, e:"Le bruit gaussien additif touche chaque pixel." },
+    { c:4, q:"Le bruit poivre et sel provient…", o:["d'un nombre de photons trop faible","de pixels morts et saturés","d'un capteur trop chaud","d'une compression JPEG"], a:1, e:"Pixels morts (valeur min) et saturés (valeur max)." },
+    { c:4, q:"Filtre adapté au bruit poivre et sel ?", o:["Moyenneur","Gaussien","Médian","Laplacien"], a:2, e:"Le médian élimine les valeurs extrêmes isolées." },
+    { c:4, q:"Filtre adapté au bruit gaussien ?", o:["Médian","Moyenneur (passe-bas)","Laplacien","Gradient"], a:1, e:"Un passe-bas supprime les hautes fréquences dues au bruit." },
+    { c:4, q:"Image A : RSB = 10 dB. Image B : RSB = 20 dB. La plus bruitée est…", o:["A","B","Aucune","On ne peut pas savoir"], a:0, e:"Un RSB plus faible signifie plus de bruit." },
+    { c:4, q:"Un RSB négatif signifie que…", o:["c'est impossible","la puissance du bruit dépasse celle de l'image","l'image n'a pas de bruit","le bruit est poivre et sel"], a:1, e:"RSB < 0 dB : P_B > P_I." },
+    { c:4, q:"Médiane du voisinage 5, 4, 5, 5, 0, 4, 6, 5, 5 ?", o:["4","4,3","5","0"], a:2, e:"Trié : 0 4 4 5 5 5 5 5 6 → valeur du milieu = 5." },
+    { c:4, q:"Le filtre médian est-il un filtre linéaire (convolution) ?", o:["Oui","Non"], a:1, e:"La médiane n'est pas linéaire : pas de convolution." },
+    // Ch5
+    { c:5, q:"Un filtre passe-bas donne une image…", o:["avec les contours seuls","floue","négative","binaire"], a:1, e:"Il garde les basses fréquences (variations lentes)." },
+    { c:5, q:"Les contours d'une image correspondent aux…", o:["basses fréquences","hautes fréquences","niveaux moyens","pixels saturés"], a:1, e:"Variations rapides d'intensité = hautes fréquences." },
+    { c:5, q:"Somme des coefficients d'un noyau passe-haut (Laplacien) ?", o:["1","9","0","−1"], a:2, e:"Zone uniforme → réponse nulle." },
+    { c:5, q:"Coefficients du filtre moyenneur 3 × 3 ?", o:["Tous égaux à 1/9","Centre 8, autres −1","Centre 4","Gaussiens"], a:0, e:"Moyenne des 9 pixels : somme = 1." },
+    { c:5, q:"Le Laplacien correspond à une…", o:["dérivée première","dérivée seconde","intégrale","moyenne"], a:1, e:"Gradient = dérivée 1re ; Laplacien = dérivée 2nde." },
+    { c:5, q:"Amplitude du gradient G = ?", o:["I*hx + I*hy","√((I*hx)² + (I*hy)²)","max(I*hx, I*hy)","(I*hx)(I*hy)"], a:1, e:"Norme euclidienne des deux dérivées directionnelles." },
+    { c:5, q:"Principal défaut des filtres dérivateurs (gradient, Laplacien) ?", o:["Ils floutent","Ils sont très sensibles au bruit","Ils changent la taille","Ils sont non linéaires"], a:1, e:"Dériver amplifie les variations rapides, donc le bruit." },
+    // Ch6
+    { c:6, q:"Négatif d'un pixel de valeur 100 dans une image 8 bits ?", o:["100","155","156","−100"], a:1, e:"s = 255 − 100 = 155." },
+    { c:6, q:"Négatif d'un pixel de valeur 21 dans une image 5 bits ?", o:["10","11","234","21"], a:0, e:"L − 1 = 31 ; s = 31 − 21 = 10." },
+    { c:6, q:"Correction gamma avec γ < 1 :", o:["assombrit l'image","éclaircit l'image","ne change rien","inverse l'image"], a:1, e:"Elle étend les niveaux sombres." },
+    { c:6, q:"Pour une IRM trop sombre, quelle valeur de γ choisir ?", o:["γ = 3","γ = 0,4","γ = 1","γ = 5"], a:1, e:"γ < 1 éclaircit les zones sombres (cours : 0,6 ; 0,4 ; 0,3)." },
+    { c:6, q:"La transformation logarithmique…", o:["étend les sombres et compresse les clairs","étend les clairs","inverse l'image","binarise l'image"], a:0, e:"s = c·log(1 + r) : idéale pour les grandes dynamiques." },
+    { c:6, q:"Pourquoi log(1 + r) et pas log(r) ?", o:["Pour aller plus vite","Car log(0) n'est pas défini","Pour inverser l'image","Par convention"], a:1, e:"r peut valoir 0." },
+    // Ch7
+    { c:7, q:"Dans le spectre de Fourier centré, le centre représente…", o:["les hautes fréquences","les basses fréquences","le bruit","la phase"], a:1, e:"Centre = BF (informations générales) ; bords = HF (détails)." },
+    { c:7, q:"La TF d'un carré blanc donne…", o:["des anneaux","une croix","un point","une ligne diagonale"], a:1, e:"Les bords droits du carré donnent une croix ; un cercle donne des anneaux." },
+    { c:7, q:"Quelle information indique la position des structures dans l'image ?", o:["Le module","La phase","La partie réelle","La moyenne"], a:1, e:"Module = importance de chaque fréquence ; phase = position." },
+    { c:7, q:"Une sinusoïde verticale donne dans le spectre…", o:["une ligne verticale","une ligne horizontale","un cercle","rien"], a:1, e:"Verticale → ligne horizontale, et inversement." },
+    { c:7, q:"Un filtre circulaire centré dans le domaine fréquentiel est un…", o:["passe-haut","passe-bas","filtre médian","négatif"], a:1, e:"Il garde le centre (BF) : l'image devient plus lisse." },
+    { c:7, q:"Module de F si R = 3 et I = 4 ?", o:["7","5","12","1"], a:1, e:"|F| = √(3² + 4²) = 5." }
+  ],
+};

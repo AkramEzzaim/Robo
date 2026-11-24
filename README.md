@@ -1,6 +1,6 @@
-# Robotique industrielle — Résumé de cours
+# Modules de révision
 
-Résumé de cours (notions clés, formules, TD corrigés) en Next.js.
+Cours, exercices corrigés et quiz de robotique industrielle et de traitement d’images médicales en Next.js.
 
 ## Lancer en local
 
@@ -9,11 +9,11 @@ npm install
 npm run dev
 ```
 
-Puis ouvrir http://localhost:3000.
+Puis ouvrir http://localhost:3000 pour choisir un module.
 
 ## Structure
 
-- `app/content.ts` — contenu de la page (HTML, formules LaTeX entre `$...$`)
+- `app/robotique/` et `app/imagerie-medicale/` — pages, contenu et questions des modules
 - `app/globals.css` — styles (thème clair / sombre)
-- `app/Enhancements.tsx` — thème, rendu KaTeX, recherche, sommaire actif
+- `app/Enhancements.tsx` et `app/course-interactions.js` — thème, rendu KaTeX, recherche, sommaire et quiz
 # Robotique-industrielle-

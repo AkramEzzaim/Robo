@@ -1,0 +1,20 @@
+/* matrices, code, mini histograms */
+.mats { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
+.mats > div { display: flex; flex-direction: column; gap: 4px; }
+.mats span { font-size: 12px; font-weight: 600; color: var(--muted); }
+table.mat { width: auto; border-collapse: separate; border-spacing: 3px; font-family: var(--font-mono), monospace; font-size: 13px; }
+table.mat td { border: none; background: var(--surface-2); border-radius: 6px; padding: 4px 8px; text-align: center; min-width: 30px; }
+table.mat.res td { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+table.mat.small { margin-bottom: 10px; }
+table.mat.small td { padding: 3px 6px; font-size: 12px; min-width: 26px; }
+table.mat td.hl { background: #fde2e2; color: #c62828; font-weight: 700; }
+[data-theme="dark"] table.mat td.hl { background: #3a1d1d; color: #ff8a8a; }
+pre.code { margin: 0 0 8px; background: #0f1320; color: #e6e9f2; border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-size: 12.5px; line-height: 1.55; }
+pre.code code { background: none; padding: 0; font-size: inherit; color: inherit; }
+.bars { display: flex; align-items: flex-end; gap: 4px; height: 110px; margin: 8px 0 26px; padding: 0 2px; border-bottom: 1px solid var(--border); }
+.bars .b { flex: 1; position: relative; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 1px; }
+.bars .b i { position: absolute; top: -17px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 10.5px; color: var(--muted); }
+.bars .b em { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-style: normal; font-size: 10.5px; color: var(--muted); white-space: nowrap; }
+.mats > div { min-width: 0; }
+.table-scroll table.mat { min-width: 0; }
+.bars .b em { font-size: clamp(8px, 2.5vw, 10.5px); }
