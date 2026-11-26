@@ -5,7 +5,14 @@ import renderMathInElement from "katex/contrib/auto-render";
 import { setupCourseInteractions } from "./course-interactions";
 import { roboticsQuiz } from "./robotique/quiz-data";
 import { imagingQuiz } from "./imagerie-medicale/quiz-data";
-import { modules } from "./modules";
+import { projectQuiz } from "./management-de-projet/quiz-data";
+import type { modules } from "./modules";
+
+const quizzes = {
+  "/robotique": roboticsQuiz,
+  "/imagerie-medicale": imagingQuiz,
+  "/management-de-projet": projectQuiz,
+};
 
 // Enable theme switching, KaTeX, and course interactions after hydration.
 export default function Enhancements({ module }: { module: (typeof modules)[number]["href"] }) {
@@ -48,7 +55,7 @@ export default function Enhancements({ module }: { module: (typeof modules)[numb
       return () => chart.replaceChildren();
     });
 
-    const cleanup = setupCourseInteractions(module === "/robotique" ? roboticsQuiz : imagingQuiz);
+    const cleanup = setupCourseInteractions(quizzes[module]);
     return () => {
       themeBtn.removeEventListener("click", toggleTheme);
       cleanup();

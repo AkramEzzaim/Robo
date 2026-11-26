@@ -8,7 +8,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["500"], variable: "--
 
 export const metadata: Metadata = {
   title: "Modules de révision",
-  description: "Cours, exercices corrigés et quiz de robotique industrielle et de traitement d’images médicales.",
+  description: "Cours, exercices corrigés et quiz de robotique industrielle, de traitement d’images médicales et de management de projet.",
 };
 
 // Applies the saved (or system) theme before first paint to avoid a flash.

@@ -340,3 +340,8 @@ footer { color: var(--muted); font-size: 13px; text-align: center; padding: 24px
 @media print {
   .module-nav { display: none; }
 }
+
+@media (max-width: 420px) {
+  .module-nav { overflow-x: auto; }
+  .module-nav a { flex: none; white-space: nowrap; font-size: 13px; }
+}

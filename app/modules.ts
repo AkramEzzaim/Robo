@@ -11,4 +11,10 @@ export const modules = [
     shortTitle: "Imagerie médicale",
     description: "Images numériques, histogrammes, filtrage et transformée de Fourier.",
   },
+  {
+    href: "/management-de-projet",
+    title: "Management De Projet",
+    shortTitle: "Projet",
+    description: "Planification, coûts, risques et qualité selon le PMBOK.",
+  },
 ] as const;
